@@ -18,6 +18,7 @@ services:
       - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
     networks:
       - frontend
+      - backend
   agent:
     container_name: ${COMPOSE_PROJECT_NAME}-agent
     image: ran91/gocd-agent
@@ -33,6 +34,8 @@ services:
       - AGENT_AUTO_REGISTER_HOSTNAME=${AGENT_AUTO_REGISTER_HOSTNAME}
     depends_on:
       - server
+    networks:
+      - backend
 
 networks:
   frontend:
