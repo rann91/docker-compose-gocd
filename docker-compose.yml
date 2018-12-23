@@ -32,12 +32,13 @@ services:
       - GO_SERVER_URL=https://server:8154/go
       - AGENT_AUTO_REGISTER_KEY=${AGENT_AUTO_REGISTER_KEY}
       - AGENT_AUTO_REGISTER_HOSTNAME=${AGENT_AUTO_REGISTER_HOSTNAME}
-    depends_on:
-      - server
     networks:
       - backend
+    depends_on:
+      - server
 
 networks:
   frontend:
     external:
       name: nginx-proxy
+  backend:
