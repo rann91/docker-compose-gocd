@@ -10,7 +10,7 @@ services:
       - 8154
     volumes:
       - ./data:/godata
-      - ./.ssh:/home/go/.ssh
+      - ~/.ssh:/home/go/.ssh
     environment:
       - VIRTUAL_HOST=${VIRTUAL_HOST},www.${VIRTUAL_HOST}
       - VIRTUAL_PORT=8153
@@ -25,7 +25,7 @@ services:
     restart: always
     volumes:
       - ./data:/godata
-      - ./.ssh:/home/go/.ssh
+      - ~/.ssh:/home/go/.ssh
       - ${PROJECTS_DIR}:${PROJECTS_DIR}
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
