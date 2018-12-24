@@ -9,12 +9,11 @@ services:
       - 8153
       - 8154
     volumes:
-      - ./data:/godata
-      - ~/.ssh:/home/go/.ssh
+      - ./godata:/godata:delegated
     environment:
-      - VIRTUAL_HOST=${VIRTUAL_HOST},www.${VIRTUAL_HOST}
+      - VIRTUAL_HOST=${VIRTUAL_HOST}
       - VIRTUAL_PORT=8153
-      - LETSENCRYPT_HOST=${VIRTUAL_HOST},www.${VIRTUAL_HOST}
+      - LETSENCRYPT_HOST=${VIRTUAL_HOST}
       - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
     networks:
       - frontend
@@ -24,14 +23,13 @@ services:
     image: ran91/gocd-agent
     restart: always
     volumes:
-      - ./data:/godata
-      - ~/.ssh:/home/go/.ssh
-      - ${PROJECTS_DIR}:${PROJECTS_DIR}
-      - /var/run/docker.sock:/var/run/docker.sock
+      - ./godata:/godata:delegated
+      - ./.ssh:/home/go/.ssh:delegated
+      - ${PROJECTS_DIR}:${PROJECTS_DIR}:delegated
+      - /var/run/docker.sock:/var/run/docker.sock:delegated
     environment:
       - GO_SERVER_URL=https://server:8154/go
       - AGENT_AUTO_REGISTER_KEY=${AGENT_AUTO_REGISTER_KEY}
-      - AGENT_AUTO_REGISTER_HOSTNAME=${AGENT_AUTO_REGISTER_HOSTNAME}
     networks:
       - backend
     depends_on:

@@ -1,2 +1,4 @@
-/data
+/godata
 .env
+.ssh
+.DS_Store
