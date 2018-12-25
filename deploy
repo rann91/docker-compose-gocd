@@ -1,0 +1,42 @@
+#!/bin/bash
+
+set -e
+
+if [ ! -f .env ]; then
+    echo "ERROR: .env not found."
+    exit 1;
+fi
+
+YELLOW="\033[0;33m"
+NC="\033[0m"
+COMPOSE_PROJECT_NAME=$(grep COMPOSE_PROJECT_NAME .env | cut -d "=" -f2)
+
+if [ -z "$COMPOSE_PROJECT_NAME" ]; then
+    echo "ERROR: 'COMPOSE_PROJECT_NAME' not set in .env"
+    exit 1;
+fi
+
+echo ""
+echo -e "${YELLOW}Deployment started for: $COMPOSE_PROJECT_NAME${NC}"
+echo ""
+
+# Pull Docker images
+echo ""
+echo -e "${YELLOW}[Step 1/2]: Pulling latest Docker images...${NC}"
+echo ""
+
+docker-compose pull
+
+# Recreate containers
+echo ""
+echo -e "${YELLOW}[Step 2/2]: Recreating containers...${NC}"
+echo ""
+
+if [ -n "$1" ] && [ $1 == "prod" ]; then
+    docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --force-recreate --remove-orphans
+else
+    docker-compose up -d --force-recreate --remove-orphans
+fi
+
+echo ""
+echo -e "${YELLOW}Deployment complete!${NC}"
