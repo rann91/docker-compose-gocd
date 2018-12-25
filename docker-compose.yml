@@ -9,8 +9,9 @@ services:
       - 8153
       - 8154
     volumes:
-      - ./godata:/godata:delegated
-      - ./.ssh:/home/go/.ssh:delegated
+      - ./godata:/godata
+      - ./.ssh:/home/go/.ssh
+      - /var/run/docker.sock:/var/run/docker.sock
     environment:
       - VIRTUAL_HOST=${VIRTUAL_HOST}
       - VIRTUAL_PORT=8153
@@ -24,10 +25,9 @@ services:
     image: ran91/gocd-agent
     restart: always
     volumes:
-      - ./godata:/godata:delegated
-      - ./.ssh:/home/go/.ssh:delegated
-      - ${PROJECTS_DIR}:${PROJECTS_DIR}:delegated
-      - /var/run/docker.sock:/var/run/docker.sock:delegated
+      - ./godata:/godata
+      - ./.ssh:/home/go/.ssh
+      - /var/run/docker.sock:/var/run/docker.sock
     environment:
       - GO_SERVER_URL=https://server:8154/go
       - AGENT_AUTO_REGISTER_KEY=${AGENT_AUTO_REGISTER_KEY}
