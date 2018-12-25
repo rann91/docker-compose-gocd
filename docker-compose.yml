@@ -22,7 +22,7 @@ services:
       - backend
   agent:
     container_name: gocd-agent
-    image: ran91/gocd-agent
+    image: gocd/gocd-agent-alpine-3.8:v18.12.0
     restart: always
     volumes:
       - ./godata:/godata
