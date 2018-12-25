@@ -24,7 +24,7 @@ services:
     restart: always
     volumes:
       - ./godata:/godata:delegated
-      - ./.ssh:/home/go/.ssh
+      - ./.ssh:/home/go/.ssh:delegated
       - ${PROJECTS_DIR}:${PROJECTS_DIR}:delegated
       - /var/run/docker.sock:/var/run/docker.sock:delegated
     environment:
