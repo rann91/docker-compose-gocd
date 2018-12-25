@@ -2,7 +2,7 @@ version: "3"
 
 services:
   server:
-    container_name: ${COMPOSE_PROJECT_NAME}-server
+    container_name: gocd-server
     image: gocd/gocd-server:v18.12.0
     restart: always
     expose:
@@ -19,12 +19,12 @@ services:
       - frontend
       - backend
   agent:
-    container_name: ${COMPOSE_PROJECT_NAME}-agent
+    container_name: gocd-agent
     image: ran91/gocd-agent
     restart: always
     volumes:
       - ./godata:/godata:delegated
-      - ./.ssh:/home/go/.ssh:delegated
+      - ./.ssh:/home/go/.ssh
       - ${PROJECTS_DIR}:${PROJECTS_DIR}:delegated
       - /var/run/docker.sock:/var/run/docker.sock:delegated
     environment:
